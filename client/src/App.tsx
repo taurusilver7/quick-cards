@@ -1,34 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { Link, useNavigate } from "react-router-dom";
+import { TDeck } from "./api/config";
+import { createDeck, deleteDeck, getDecks } from "./api";
 
 function App() {
-  const [count, setCount] = useState(0)
+	const [decks, setDecks] = useState<TDeck[]>([]);
+	const [title, setTitle] = useState("");
+	const navigate = useNavigate();
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+	async function HandleDeck(e: React.FormEvent) {
+		e.preventDefault();
+
+		// Talk to the backend & persist the deck with fetch()
+		const deck = await createDeck(title);
+		// setDecks(deck);
+		setDecks([...decks, deck]);
+		setTitle("");
+	}
+
+	async function handleDelete(deckId: string) {
+		await deleteDeck(deckId);
+		setDecks(decks.filter((deck) => deck._id !== deckId));
+	}
+
+	useEffect(() => {
+		async function fetchDecks() {
+			const newDecks = await getDecks();
+			setDecks(newDecks);
+		}
+		fetchDecks();
+	}, []);
+
+	return (
+		<div className="container">
+			<div className="app">
+				<form onSubmit={HandleDeck}>
+					<label htmlFor="deck-title">Deck Title</label>
+					<input
+						type="text"
+						placeholder="Create a deck here.."
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+							setTitle(e.target.value);
+							// console.log(title);
+						}}
+						value={title}
+						id="deck-title"
+					/>
+					<button>Create Deck</button>
+				</form>
+
+				<h1>Your Decks</h1>
+
+				<ul className="decks">
+					{decks.map((deck, index) => (
+						<li key={index} onClick={() => navigate(`deck/${deck._id}`)}>
+							<button
+								onClick={() => handleDelete(deck._id)}
+								className="close"
+							>
+								x
+							</button>
+							<Link
+								to={`deck/${deck._id}`}
+								style={{ textDecoration: "none" }}
+							>
+								{deck.title}
+							</Link>
+						</li>
+					))}
+				</ul>
+			</div>
+		</div>
+	);
 }
 
-export default App
+export default App;
