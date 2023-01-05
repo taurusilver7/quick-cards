@@ -31,4 +31,13 @@ Create a route for deck CRUD operations, and create their corresponding controll
 
 For creating a Deck, get the title & card details from request object body, and post it to the database. Enable the express server json method & body-parser to parse the request data from the client.
 
-mongopassword: OnhZ3KWS9bo4UsTL
+Refactor the server with environment variables & code splitting the server into MVC architecture. Set the server file to use the enviromental varibles using a package [dotenv](https://www.npmjs.com/package/dotenv)
+
+```bash
+import * as dotenv from 'dotenv';
+dotenv.config()
+#or
+import {config} from 'dotenv'
+config()
+```
+
