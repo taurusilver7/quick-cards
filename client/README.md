@@ -26,4 +26,10 @@ Create a fetch request to create a deck from the form submission. Create a fetch
 
 Store the fetched decks in a state. Map over the state to populate the fetched Deck array Create a type for the fetched Decks. Style the Container & decks.
 
+Populate the App component & the Deck component to view decks & cards.
+
+Manage the navigations between app & deck in the root file with react-router-dom.
+
+Create the api endpoints in /api directory for CRUD decks & their corresponding cards.
+
 
