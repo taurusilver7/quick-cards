@@ -27,6 +27,8 @@ To watch over the /src directory files change & execute only .ts & .json files. 
 Add the types to the server callback functions to get all the methods in autocomplete in the Intellisense.
 
 Create /models for mongoose data models for Deck.ts. Mongoose has their own internal types, an external package is unnecessary.
+Create a route for deck CRUD operations, and create their corresponding controller functions.
 
+For creating a Deck, get the title & card details from request object body, and post it to the database. Enable the express server json method & body-parser to parse the request data from the client.
 
 mongopassword: OnhZ3KWS9bo4UsTL
