@@ -41,3 +41,8 @@ import {config} from 'dotenv'
 config()
 ```
 
+Create the routes for the application CRUD operations & their corresponding controller functions.
+
+Enable the CORS middleware to connect the server to the client application.
+
+Remove all the console.log()'s from the server to avoid information leakages.
