@@ -1,4 +1,6 @@
-import { API_URL, TDeck } from "./config";
+import { API_ROOT_URL, TDeck } from "./config";
+
+const API_URL = `${API_ROOT_URL}/api/v1`;
 
 export async function createDeck(title: string) {
 	const response = await fetch(`${API_URL}/deck`, {
