@@ -18,16 +18,14 @@ app.use(cors({ origin: "*" }));
 const port = normalizePort(process.env.PORT || "5000");
 app.set("port", port);
 
-app.use("/api/v1", indexRoute);
+app.use("/api/v1/deck", indexRoute);
 
 const server = http.createServer(app);
 
 // Database connection.
 mongoose.set("strictQuery", false);
 mongoose
-	.connect(
-		"mongodb+srv://admin:OnhZ3KWS9bo4UsTL@quickcards.e7fcc3x.mongodb.net/?retryWrites=true&w=majority"
-	)
+	.connect(process.env.MONGO_URL!)
 	.then(() => {
 		server.listen(port);
 		server.on("error", onError);
